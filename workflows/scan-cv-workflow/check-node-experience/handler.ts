@@ -2,6 +2,9 @@ import { Context } from "aws-lambda";
 import { ScanCvEvent } from "../types";
 import S3 from "aws-sdk/clients/s3";
 import { CheckNodeExperienceLambdaEnvironmentVariables, createConfig } from "./config";
+import { calculateScore } from "../utils";
+
+const KEYS_TO_SEARCH = ["node.js", "javascript", "mocha", "jest", "chai", "express", "nest.js", "typescript"];
 
 export const checkNodeExperience = async (
   event: ScanCvEvent,
@@ -9,15 +12,20 @@ export const checkNodeExperience = async (
   s3Client: S3,
 ) => {
 
-  
-  const nodeExperience = 0;
+  const { Body: body } = await s3Client
+  .getObject({
+    Bucket: config.extractedFilesBucketName,
+    Key: event.key,
+  })
+  .promise();
+
+  const nodeExperience = await calculateScore(body!.toString(), KEYS_TO_SEARCH);
 
   return {
     ...event,
     nodeExperience,
   };
 };
-
 
 export const handle = async (event: ScanCvEvent, _context: Context) => {
   const config = createConfig(process.env);
