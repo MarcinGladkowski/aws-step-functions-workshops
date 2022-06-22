@@ -35,4 +35,5 @@ Properties:
               - arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service}-${self:provider.stage}-checkItExperience-lambda:*
               - arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service}-${self:provider.stage}-extractText-lambda
               - arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service}-${self:provider.stage}-extractText-lambda:*
+              - arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service}-${self:provider.stage}-checkNodeExperience-lambda*
             Effect: Allow
