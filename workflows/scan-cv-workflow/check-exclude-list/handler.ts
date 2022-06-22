@@ -21,7 +21,7 @@ export const checkExcludeLists = async (
 
   const isExcluded = (parsedBody.includes('janusz') && parsedBody.includes('kowalski') && parsedBody.includes("chrzaszczyzewoszyce"));
 
-  logger.info("isExcluded value", isExcluded);
+  logger.info(`isExcluded value ${isExcluded}}`);
 
   return {
     ...event,
