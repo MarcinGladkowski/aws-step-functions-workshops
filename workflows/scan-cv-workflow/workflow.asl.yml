@@ -48,3 +48,9 @@ States:
             Type: Task
             Resource: !GetAtt checkItExperience-lambda.Arn
             End: true
+      - StartAt: checkNodeExperience
+        States:
+          checkNodeExperience:
+            Type: Task
+            Resource: !GetAtt checkNodeExperience-lambda.Arn
+            End: true
