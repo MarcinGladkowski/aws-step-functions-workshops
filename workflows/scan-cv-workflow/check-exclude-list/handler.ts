@@ -9,6 +9,13 @@ export const checkExcludeLists = async (
 ) => {
   const isExcluded = false;
 
+  const { Body: body } = await s3Client
+  .getObject({
+    Bucket: config.extractedFilesBucketName,
+    Key: event.key,
+  })
+  .promise();  
+
   return {
     ...event,
     isExcluded,

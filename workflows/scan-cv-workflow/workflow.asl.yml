@@ -54,3 +54,10 @@ States:
             Type: Task
             Resource: !GetAtt checkNodeExperience-lambda.Arn
             End: true
+      - StartAt: checkExcludeList
+        States:
+          checkExcludeList:
+            Type: Task
+            Resource: !GetAtt checkExcludeList-lambda.Arn
+            End: true
+      

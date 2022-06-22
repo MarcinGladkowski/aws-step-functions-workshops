@@ -56,6 +56,7 @@ functions:
   - ${file(workflows/scan-cv-workflow/check-it-experience/function.yml)}
   - ${file(workflows/scan-cv-workflow/check-cloud-experience/function.yml)}
   - ${file(workflows/scan-cv-workflow/check-node-experience/function.yml)}
+  - ${file(workflows/scan-cv-workflow/check-exclude-list/function.yml)}
 
 stepFunctions:
   stateMachines:
