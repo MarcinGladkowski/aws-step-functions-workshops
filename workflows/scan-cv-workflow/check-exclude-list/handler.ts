@@ -1,7 +1,8 @@
 import { ScanCvEvent } from "../types";
 import S3 from "aws-sdk/clients/s3";
-import { CheckExcludeListsLambdaEnvironmentVariables } from "./config";
+import { CheckExcludeListsLambdaEnvironmentVariables, createConfig } from "./config";
 import { winstonLogger as logger } from "../../../shared/logger";
+import { Context } from "aws-lambda";
 
 
 export const checkExcludeLists = async (
@@ -26,4 +27,11 @@ export const checkExcludeLists = async (
     ...event,
     isExcluded,
   };
+};
+
+
+export const handle = async (event: ScanCvEvent, _context: Context) => {
+  const config = createConfig(process.env);
+  const s3Client = new S3();
+  return checkExcludeLists(event, config, s3Client);
 };
