@@ -34,7 +34,7 @@ States:
     Next: checkExperience
   checkExperience:
     Type: Parallel
-    End: true
+    Next: calculateScore
     Branches:
       - StartAt: checkNodeExperience
         States:
@@ -42,21 +42,29 @@ States:
             Type: Task
             Resource: !GetAtt checkNodeExperience-lambda.Arn
             End: true
+            ResultPath: $
       - StartAt: checkCloudExperience
         States:
           checkCloudExperience:
             Type: Task
             Resource: !GetAtt checkCloudExperience-lambda.Arn
             End: true
+            ResultPath: $
       - StartAt: checkItExperience
         States:
           checkItExperience:
             Type: Task
             Resource: !GetAtt checkItExperience-lambda.Arn
             End: true
+            ResultPath: $
       - StartAt: checkExcludeList
         States:
           checkExcludeList:
             Type: Task
             Resource: !GetAtt checkExcludeList-lambda.Arn
             End: true
+            ResultPath: $
+  calculateScore:
+    Type: Task
+    End: True
+    Resource: !GetAtt calculateScore-lambda.Arn

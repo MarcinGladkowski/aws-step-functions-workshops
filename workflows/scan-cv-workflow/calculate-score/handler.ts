@@ -15,6 +15,15 @@ export const handle = async (event: ScanCvEvent[], _context: Context) => {
     };
   }, {} as any);
 
+  logger.info(`Single event: ${JSON.stringify(singleEvent)}`);
+  // calculate total score - if excluded - 0, else sum points
+  let calculatedScore = 0;
+
+  if (!singleEvent.isExcluded) {
+    calculatedScore = singleEvent.cloudExperience + singleEvent.nodeExperience + singleEvent.itExperience
+  }
+
   logger.info(`Score has been calculated for ${config.inputBucketName}/${singleEvent.key}`);
+  logger.info(`Score: ${calculatedScore}`)
   return event;
 };
