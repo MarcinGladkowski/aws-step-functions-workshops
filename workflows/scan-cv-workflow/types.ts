@@ -9,4 +9,6 @@ export interface ScanCvEvent {
 
 export interface ScanCvScoreEvent {
   calculatedScore: number;
+  source: String,
+  key: String
 }

@@ -64,4 +64,27 @@ States:
     Type: Task
     Resource: !GetAtt calculateScore-lambda.Arn
     TimeoutSeconds: 28
-    End: true
+    Next: checkStore
+  checkStore:
+    Type: Choice
+    Choices:
+      - Variable: $.calculatedScore
+        NumericGreaterThan: 100
+        Next: saveToMatchedBucket
+    Default: saveToRejectedBucket
+  saveToMatchedBucket:
+    Type: Task
+    Resource: arn:aws:states:::aws-sdk:s3:copyObject
+    Parameters:
+      Bucket: ${self:custom.matchedFilesBucketName}
+      Key.$: $.key
+      CopySource.$: $.source
+    End: True
+  saveToRejectedBucket:
+    Type: Task
+    Resource: arn:aws:states:::aws-sdk:s3:copyObject
+    Parameters:
+      Bucket: ${self:custom.rejectedFilesBucketName}
+      Key.$: $.key
+      CopySource.$: $.source
+    End: True
